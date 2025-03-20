@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { TRPCProvider } from "@/trpc/client";
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -24,9 +25,11 @@ export default async function RootLayout({
     <ClerkProvider afterSignOutUrl={"/"}>
       <html lang={locale}>
         <body className={`${inter.className}  antialiased`}>
-          <NextIntlClientProvider messages={messages}>
-            {children}
-          </NextIntlClientProvider>
+          <TRPCProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </TRPCProvider>
         </body>
       </html>
     </ClerkProvider>
